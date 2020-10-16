@@ -1,24 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { stringify } from 'query-string';
+import { API_URL, ENDPOINTS } from './service';
+import { parseResults } from './utils/formatter';
+import Result from './components/Result';
+import SearchForm from './components/SearchForm'
 import './App.css';
 
 function App() {
+  const [submitting, setSubmitting] = useState(false);
+  const [results, setResults] = useState([]);
+
+  function handleErrors(response) {
+    setSubmitting(false);
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  }
+
+  function onSubmit(engine, query) {
+    const params = { engine, query };
+    setSubmitting(true);
+    fetch(`${API_URL}/${ENDPOINTS.SEARCH}?${stringify(params)}`, { method: 'GET' })
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(results => {
+        setSubmitting(false);
+        setResults(parseResults(results));
+      });
+  }
+
+  function renderResults(results) {
+    if(results && results.length) {
+      return results.map((result, i) => {
+        return (
+          <Result
+            key={`result-${i}`}
+            {...result}
+          />
+        );
+      })
+    } else {
+      return '';
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SearchForm
+        onSubmit={onSubmit}
+        submitting={submitting}
+      />
+
+      {renderResults(results)}
     </div>
   );
 }

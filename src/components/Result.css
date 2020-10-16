@@ -1,0 +1,16 @@
+.Result {
+  margin-bottom: 30px;
+}
+
+.Result .link a {
+  text-decoration: none;
+}
+
+.Result .link a h3 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.Result .description p {
+  margin: 0
+}
