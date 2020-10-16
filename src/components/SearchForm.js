@@ -21,6 +21,7 @@ function SearchForm(props) {
       <div className="form-group">
         <label>Engine</label>
         <select
+          id="engine"
           name="engine"
           onChange={e => setEngine(e.target.value)}
           value={engine}
@@ -34,6 +35,7 @@ function SearchForm(props) {
       <div className="form-group">
         <label>Query</label>
         <input
+          id="query"
           name="query"
           type="text"
           value={query}
@@ -42,7 +44,7 @@ function SearchForm(props) {
       </div>
 
       <div className="form-group">
-        <button type="submit" disabled={submitting}>Search</button>
+        <button id="submit" type="submit" disabled={submitting}>Search</button>
       </div>
     </form>
   );
