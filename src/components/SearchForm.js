@@ -20,7 +20,11 @@ function SearchForm(props) {
     >
       <div className="form-group">
         <label>Engine</label>
-        <select onChange={e => setEngine(e.target.value)} value={engine}>
+        <select
+          name="engine"
+          onChange={e => setEngine(e.target.value)}
+          value={engine}
+        >
           <option value="google">Google</option>
           <option value="bing">Bing</option>
           <option value="both">Both</option>
@@ -29,7 +33,12 @@ function SearchForm(props) {
 
       <div className="form-group">
         <label>Query</label>
-        <input type="text" value={query} onChange={e => setQuery(e.target.value)} />
+        <input
+          name="query"
+          type="text"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+        />
       </div>
 
       <div className="form-group">
